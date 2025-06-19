@@ -54,6 +54,9 @@ def get_activities():
 
 @app.post("/activities/{activity_name}/signup")
 def signup_for_activity(activity_name: str, email: str):
+    # Validate student is not already signed up for the activity
+    if activity_name not in activities:
+        raise HTTPException(status_code=404, detail="Activity not found")
     """Sign up a student for an activity"""
     # Validate activity exists
     if activity_name not in activities:
